@@ -5,21 +5,16 @@
 
 package com.example.spring_test_project;
 
-import com.example.spring_test_project.model.Status;
+import com.example.spring_test_project.model.BcAnalytic;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiPredicate;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * @author Aleksandr_Berestov
@@ -29,10 +24,10 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
+    }
 
-        System.out.println(longerPredicate(interrupt("4")));
-        List<Status> statuses = Status.errorStatuses();
-
+    private static BcAnalytic getAnalityc() {
+        return new BcAnalytic().setId(22L);
     }
 
     private static String longerPredicate(Supplier<Boolean> interruptSupplier) {
@@ -63,7 +58,7 @@ public class Main {
         List<String> collect = IntStream.range(1, 22).mapToObj(i -> i + "").toList();
 
         boolean breaked = false;
-        for (String s: collect) {
+        for (String s : collect) {
             if (s.equals("7")) {
                 return "breaked";
             }
@@ -84,7 +79,7 @@ public class Main {
         val.forEach(System.out::print);
     }
 
-    private static BiPredicate<String, String>  aaa2() {
+    private static BiPredicate<String, String> aaa2() {
         BiPredicate<String, String> or = pre().or(pre());
         return or;
 

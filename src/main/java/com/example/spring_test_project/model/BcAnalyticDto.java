@@ -23,6 +23,11 @@ public class BcAnalyticDto {
 
     private Long id;
 
-    private List<ImportDetailsDto> importDetails = new ArrayList<>();
+    private int counter;
+
+    private String name;
+
+
+//    private List<ImportDetailsDto> importDetails = new ArrayList<>();
 
 }

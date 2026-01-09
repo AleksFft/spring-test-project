@@ -17,20 +17,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class BcRuleRecordResponse {
 
-    private String sessionId;
-    private String clientName;
-    private String inn;
-    private String kpp;
-    private String extId;
-    private String rcName;
-    private Integer rulesAmount;
-    private Long selectedRulesAmount;
-    private Long debitAmount;
-    private Long creditAmount;
-    private Long duplicateErrorAmount;
-    private Long requisiteErrorAmount;
-    private Long clientId;
-    private BcRuleRecordTypeDto type;
-    private Integer size;
+    private String filename;
+    private String contentType;
 
 }

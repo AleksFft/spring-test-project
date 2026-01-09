@@ -24,6 +24,6 @@ public class ImportDetailsDto {
 
     private String sessionId;
 
-    private Set<BcAnalyticDto> bcAnalytics = new HashSet<>();
+//    private Set<BcAnalyticDto> bcAnalytics = new HashSet<>();
 
 }

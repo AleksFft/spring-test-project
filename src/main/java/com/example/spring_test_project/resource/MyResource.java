@@ -14,10 +14,13 @@ import com.example.spring_test_project.model.BcRuleRecordResponse;
 import com.example.spring_test_project.model.Payment;
 import com.example.spring_test_project.model.Record;
 import com.example.spring_test_project.service.BcRuleExportProcessor;
+import com.example.spring_test_project.service.RecordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +48,7 @@ public class MyResource {
     private final BcRuleExportProcessor exportProcessor;
     private final RecordRepository repository;
     private final BcRuleImportProcessorImpl importProcessor;
+    private final RecordService recordService;
 
     @PostMapping
     @Operation(summary = "Формировать файл правил разметки")
@@ -60,17 +64,31 @@ public class MyResource {
                 .setResponseEntity(exportProcessor.getExportResponse(request).responseEntity());
     }
 
+    @GetMapping("/get-response")
+    @Operation(summary = "Формировать файл правил разметки")
+    ExportFullResponse getResponse(@ParameterObject ExportRequest request) {
+        return new ExportFullResponse()
+                .setFullResponse(request.toString())
+                .setResponseEntity(exportProcessor.getExportResponse(request).responseEntity());
+    }
+
     @GetMapping("/create-record/{s}")
     @Operation(summary = "Поиск правила по имени")
     public Record create(@PathVariable(value = "s") String s) throws IOException {
         return exportProcessor.createRecord(s);
     }
 
-    @PostMapping(value = "/read-file")
+    @PostMapping(value = "/read-file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Чтение файла правил разметки")
     public BcRuleRecordResponse readFile(@RequestParam("file") MultipartFile file) throws IOException {
-        BcRuleRecordResponse bcRuleRecordResponse = importProcessor.readFile(file);
+        BcRuleRecordResponse bcRuleRecordResponse = new BcRuleRecordResponse();
+        String originalFilename = file.getOriginalFilename();
+        String contentType = file.getContentType();
 
+        bcRuleRecordResponse.setFilename(originalFilename);
+        bcRuleRecordResponse.setContentType(contentType);
+
+        recordService.readFile(file);
         return bcRuleRecordResponse;
     }
 

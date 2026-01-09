@@ -39,8 +39,8 @@ public class ImportDetails {
     @Column(name = "session_id")
     private String sessionId;
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "importDetails")
-    Set<BcAnalytic> bcAnalytics = new HashSet<>();
+//    @JsonBackReference
+//    @ManyToMany(mappedBy = "importDetails")
+//    Set<BcAnalytic> bcAnalytics = new HashSet<>();
 
 }

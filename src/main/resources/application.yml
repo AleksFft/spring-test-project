@@ -11,7 +11,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: create-drop
-    show-sql: false
+    show-sql: true
 
 compare-movements:
   # количество одновременной отправки
@@ -19,4 +19,7 @@ compare-movements:
   # задержка отправки очередной порции
   timeout: 3000
 
-  #http://localhost:8080/swagger-ui/index.html#/
+  server:
+    port: 8085
+
+  #http://localhost:8085/swagger-ui/index.html#/

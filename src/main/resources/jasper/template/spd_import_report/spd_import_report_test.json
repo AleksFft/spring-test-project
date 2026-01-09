@@ -1,0 +1,107 @@
+{
+    "title": "Отчет системы ДБО о результатах проверки импортируемых плановых документов",
+    "reportType": "SCHEDULED_PAYMENT_DOCUMENT_IMPORT",
+    "totalFiles": 15,
+    "totalSuccessfullyUploaded": 10,
+    "totalNotImported": 1,
+    "totalUnformatted": 5,
+    "files": [
+      {
+        "filename": "2025_09_01_Платежи.txt",
+        "state": "SUCCESS",
+        "title": "Файл успешно загружен",
+        "date": "02.09.2025 13:37:44",
+        "totalDocs": 5,
+        "totalpaymentDocs": 3,
+        "groups": [
+          {
+            "status": "SUCCESS",
+            "title": "Документы загружены",
+            "note": "Примечание: документы успешно загружены. Всего: 2.",
+            "docs": [
+              {
+                "number": 31,
+                "date": "01.09.2025",
+                "acc": "40702810000000000000",
+                "bic": "1111",
+                "sum": "100000.00",
+                "status": "SUCCESS"
+              },
+              {
+                "number": 32,
+                "date": "01.09.2025",
+                "acc": "40702810000000000000",
+                "bic": "1111",
+                "sum": "100000.00",
+                "status": "SUCCESS"
+              }
+            ]
+          },
+          {
+            "status": "ERROR",
+            "title": "Документы с ошибками",
+            "note": "Примечание: исправьте ошибки и повторите загрузку. Всего: 2.",
+            "errorsCount": 2,
+            "docs": [
+              {
+                "number": 33,
+                "date": "01.09.2025",
+                "acc": "40702810000000000000",
+                "bic": "1111",
+                "sum": "100000.00",
+                "status": "ERROR"
+              },
+              {
+                "number": 34,
+                "date": "01.09.2025",
+                "acc": "40702810000000000000",
+                "bic": "1111",
+                "sum": "100000.00",
+                "status": "ERROR"
+              }
+            ],
+            "errors": [
+                      "Некорректное значение реквизита «Дата документа»",
+                      "Некорректное значение в реквизите «Счет плательщика»"
+                    ]
+          }
+        ]
+      },
+      {
+        "filename": "2025_09_01_Платежи.xlx",
+        "date": "20.03.1331",
+        "state": "ERROR",
+        "title": "Ошибка импорта",
+        "totalDocs": 5,
+        "totalpaymentDocs": 3,
+        "groups": []
+      },
+      {
+        "filename": "2025_09_01_Платежи.xlx",
+        "date": "20.03.1331",
+        "state": "UNFORMATTED",
+        "title": "Неверный формат файла",
+        "totalDocs": 5,
+        "totalpaymentDocs": 3,
+        "groups": []
+      },
+      {
+        "filename": "2025_09_01_Платежи.xlx",
+        "date": "20.03.1331",
+        "state": "UNFORMATTED",
+        "title": "Неверный формат файла",
+        "totalDocs": 5,
+        "totalpaymentDocs": 3,
+        "groups": []
+      },
+      {
+        "filename": "2025_09_01_Платежи.xlx",
+        "date": "20.03.1331",
+        "state": "UNFORMATTED",
+        "title": "Неверный формат файла",
+        "totalDocs": 5,
+        "totalpaymentDocs": 3,
+        "groups": []
+      }
+    ]
+  }

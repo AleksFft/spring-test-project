@@ -18,6 +18,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import java.util.List;
 /**
  * @author Aleksandr_Berestov
  */
+@ToString
 @Getter
 @Setter
 @Entity(name = "bc_analytic")
@@ -44,13 +46,16 @@ public class BcAnalytic {
     @Column(name = "name")
     private String name;
 
-    @JsonManagedReference
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "bc_analytic_import_details",
-            joinColumns = @JoinColumn(name = "bc_analytic_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "import_details_id", referencedColumnName = "id")
-    )
-    private List<ImportDetails> importDetails = new ArrayList<>();
+    @Column(name = "counter")
+    private int counter;
+
+//    @JsonManagedReference
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(
+//            name = "bc_analytic_import_details",
+//            joinColumns = @JoinColumn(name = "bc_analytic_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "import_details_id", referencedColumnName = "id")
+//    )
+//    private List<ImportDetails> importDetails = new ArrayList<>();
 
 }

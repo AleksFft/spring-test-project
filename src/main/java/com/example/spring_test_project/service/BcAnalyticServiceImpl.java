@@ -12,6 +12,7 @@ import com.example.spring_test_project.model.BcMarkupDto;
 import com.example.spring_test_project.model.ImportDetails;
 import com.example.spring_test_project.repository.BcAnalyticRepository;
 import io.vavr.control.Try;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,9 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @author Aleksandr_Berestov
@@ -39,28 +42,41 @@ public class BcAnalyticServiceImpl {
     private final BcAnalyticMapper mapper;
 
     @Autowired
+    private EntityManager manager;
+    @Autowired
+    private BcAnalyticSearcher searcher;
+
+    @Autowired
     BcAnalyticServiceImpl proxy;
 
     public Long save() {
-        ImportDetails id1 = new ImportDetails().setSessionId(UUID.randomUUID().toString());
-        ImportDetails id2 = new ImportDetails().setSessionId(UUID.randomUUID().toString());
-        BcAnalytic bcAnalytic = new BcAnalytic().setImportDetails(List.of(id1, id2));
+        for (int i = 0; i < 50; i++) {
+            repository.save(new BcAnalytic()
+                    .setName("name")
+                    .setCounter(i)
+            );
+        }
 
-        BcAnalytic save = repository.save(bcAnalytic);
-
-        return save.getId();
+        return 50L;
     }
 
     public List<BcAnalyticDto> getAll() {
-        List<BcAnalytic> all = repository.findAll();
+        List<BcAnalyticDto> l = new ArrayList<>();
+        for (int j = 0; j < 50; j++) {
+            System.out.println("getAll() j = " + j);
+            BcAnalyticDto dto = searcher.getById(isNeedToClear(j), func(j));
+            l.add(dto);
+        }
 
-        List<BcAnalyticDto> dto = mapper.toDto(all);
-
-        return dto;
+        return l;
     }
 
-    public String exec(String s) {
-        return s;
+    private Supplier<Boolean> isNeedToClear(int i) {
+        return () -> i % 10 == 0;
+    }
+
+    private Function<Integer, Boolean> func(Integer a) {
+        return (intA) -> a % intA == 0;
     }
 
     @Transactional

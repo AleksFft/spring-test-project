@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.10.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="de06d419-7358-48b7-985a-3a2a2baf3999">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="test_group"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="mainInfoDataset" uuid="53f89d0f-c799-47e8-9e01-dbae5c3f7133">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="filesDataset" uuid="4a9fcd1e-0525-422b-ae4d-3586f951af16">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="filename" class="java.lang.String"/>
+		<field name="date" class="java.lang.String"/>
+		<field name="state" class="java.lang.String"/>
+		<field name="title" class="java.lang.String"/>
+		<field name="totalDocs" class="java.lang.String"/>
+		<field name="totalpaymentDocs" class="java.lang.String"/>
+		<variable name="IS_SUCCESS_FILE" class="java.lang.Boolean">
+			<variableExpression><![CDATA["SUCCESS".equals($F{state}) || "PROCESSING".equals($F{state})]]></variableExpression>
+		</variable>
+		<variable name="IS_ERROR_FILE" class="java.lang.Boolean">
+			<variableExpression><![CDATA["ERROR".equals($F{state})]]></variableExpression>
+		</variable>
+		<variable name="IS_UNFORMATTED_FILE" class="java.lang.Boolean">
+			<variableExpression><![CDATA["UNFORMATTED".equals($F{state})]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="documentsDataset" uuid="c3997478-3a18-4380-8c4b-dd1601b74b01">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="type" class="java.lang.String"/>
+		<field name="number" class="java.lang.String"/>
+		<field name="bic" class="java.lang.String"/>
+		<field name="status" class="java.lang.String"/>
+		<field name="date" class="java.lang.String"/>
+		<field name="acc" class="java.lang.String"/>
+		<field name="sum" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="groupsDataset" uuid="07864623-cf59-4e79-865c-d3c3414a3121">
+		<field name="status" class="java.lang.String"/>
+		<field name="title" class="java.lang.String"/>
+		<field name="note" class="java.lang.String"/>
+		<field name="errorsCount" class="java.lang.Integer"/>
+		<variable name="PATH_TO_IMAGE" class="java.lang.String">
+			<variableExpression><![CDATA[$F{status}.equals("SUCCESS") ? "/opt/template/picture/ok.svg"
+: $F{status}.equals("ERROR") ? "/opt/template/picture/error.svg"
+:  $F{status}.equals("UNFORMATTED") ? "/opt/template/picture/error.svg"
+: ""]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="errorsDataset" uuid="388976ab-6b63-434e-8734-c9bc89d44a8c">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="error" class="java.lang.String">
+			<fieldDescription><![CDATA[.]]></fieldDescription>
+		</field>
+	</subDataset>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="title" class="java.lang.String"/>
+	<field name="totalFiles" class="java.lang.Integer"/>
+	<field name="totalSuccessfullyUploaded" class="java.lang.Integer"/>
+	<field name="totalNotImported" class="java.lang.Integer"/>
+	<field name="totalUnformatted" class="java.lang.Integer"/>
+	<field name="reportType" class="java.lang.String"/>
+	<variable name="IS_IMPORT" class="java.lang.Boolean">
+		<initialValueExpression><![CDATA["SCHEDULED_PAYMENT_DOCUMENT_IMPORT".equals($F{reportType})]]></initialValueExpression>
+	</variable>
+	<variable name="TITLE" class="java.lang.String">
+		<initialValueExpression><![CDATA[$V{IS_IMPORT}
+? "Отчет системы ДБО о результатах импорта плановых документов"
+: "Отчет системы ДБО о результатах проверки импортируемых плановых документов"]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="210" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image>
+				<reportElement x="435" y="5" width="100" height="37" uuid="a9108d66-255b-44a6-bcee-44d9031228cf">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[this.getClass().getResourceAsStream("/jasper/template/picture/logo.svg")]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="80" y="45" width="430" height="30" uuid="6d478c94-8827-45ce-83e3-8827d2096640">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans Condensed" size="16" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TITLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="115" width="402" height="20" uuid="fd98dd19-920f-47b3-a29e-4a8bdf78eb87">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans Condensed" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Всего файлов, поданных на импорт: " +  $F{totalFiles}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="135" width="402" height="20" uuid="805efe3c-ef85-488b-b16f-3cc8f91b6000">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans Condensed" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Из них, по результатам обработки: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="155" width="402" height="20" uuid="ea5e4324-c82c-4ce8-ae02-ac3c54714657">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans Condensed" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Успешно загружено: " +  $F{totalSuccessfullyUploaded}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="50" y="175" width="480" height="20" uuid="c764544d-0a88-4303-a26b-ee1a633aa96f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box bottomPadding="20">
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans Condensed" size="12"/>
+					<paragraph lineSpacing="Proportional" lineSpacingSize="1.7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{IS_IMPORT}
+? "Из них, не было импортировано: " + $F{totalNotImported} + "\nНераспознанных файлов: " + $F{totalUnformatted}
+:  "Нераспознанных файлов: " + $F{totalUnformatted}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<componentElement>
+				<reportElement x="50" y="0" width="480" height="36" uuid="1a3cfc93-0fbc-4ea7-8a5c-b181fada7fd3">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.CONTENTS.height" value="px"/>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="filesDataset" uuid="10bbf887-fc0a-44f2-bef6-c731bc8689d4">
+						<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("files")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="50" width="480">
+						<textField isStretchWithOverflow="true">
+							<reportElement x="0" y="0" width="480" height="20" uuid="7f790879-48bd-4c57-971d-d57a9d8b97bc">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<box bottomPadding="5"/>
+							<textElement>
+								<font fontName="DejaVu Sans Condensed" size="16" isBold="true"/>
+								<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{filename}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true">
+							<reportElement positionType="Float" x="0" y="20" width="480" height="10" forecolor="#000000" uuid="d34a0380-28a5-4fb9-9322-f07a667b60d6">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<property name="com.jaspersoft.studio.unit.y" value="px"/>
+							</reportElement>
+							<textElement markup="styled">
+								<font fontName="DejaVu Sans Condensed" size="12"/>
+								<paragraph lineSpacing="Proportional" lineSpacingSize="1.6"/>
+							</textElement>
+							<textFieldExpression><![CDATA["Результат обработки: " + 
+(
+    $V{IS_SUCCESS_FILE} 
+    ? "<style isBold='true' forecolor=\"#00AF4F\">" + $F{title} + "</style>"
+    : ($V{IS_ERROR_FILE} || $V{IS_UNFORMATTED_FILE})
+    ? "<style isBold='true' forecolor=\"#FF0000\">" + $F{title} + "</style>"
+    : $F{title}
+) + "\n" +
+"Дата и время обработки: " + $F{date} + "\n" +
+(
+    ($V{IS_SUCCESS_FILE} || $V{IS_ERROR_FILE})
+    ? "Документов в файле: " + $F{totalDocs} + "\n" + 
+      "Количество платежных документов в файле: " + $F{totalpaymentDocs} + "\n"
+    : ""
+)]]></textFieldExpression>
+						</textField>
+						<componentElement>
+							<reportElement positionType="Float" x="0" y="35" width="480" height="1" uuid="b049eb6a-ab22-4978-9c59-c2e79244e874">
+								<property name="com.jaspersoft.studio.unit.width" value="px"/>
+								<property name="com.jaspersoft.studio.unit.y" value="px"/>
+								<property name="com.jaspersoft.studio.unit.CONTENTS.height" value="px"/>
+								<printWhenExpression><![CDATA[!((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("groups").next() == false]]></printWhenExpression>
+							</reportElement>
+							<jr:list printOrder="Vertical">
+								<datasetRun subDataset="groupsDataset" uuid="23a5e928-dcbc-42f6-a0e3-27f8daa3a07d">
+									<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("groups")]]></dataSourceExpression>
+								</datasetRun>
+								<jr:listContents height="50" width="480">
+									<image>
+										<reportElement x="10" y="1" width="15" height="15" uuid="fbe456c5-e9ab-46c4-9de3-4deabf6c62e2">
+											<property name="com.jaspersoft.studio.unit.width" value="px"/>
+											<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										</reportElement>
+										<box bottomPadding="2"/>
+										<imageExpression><![CDATA[this.getClass().getResourceAsStream("/jasper/template/picture/ok.svg")]]></imageExpression>
+									</image>
+									<textField>
+										<reportElement x="30" y="3" width="450" height="16" uuid="6c4ba5a8-0db4-4aca-9dcf-a33f2924cd8c">
+											<property name="com.jaspersoft.studio.unit.x" value="px"/>
+											<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+											<property name="com.jaspersoft.studio.unit.y" value="px"/>
+										</reportElement>
+										<textElement markup="styled">
+											<font fontName="DejaVu Sans Condensed" size="12"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+									</textField>
+									<componentElement>
+										<reportElement x="0" y="20" width="480" height="1" uuid="b625a967-5f9a-4601-8795-d2813713b0f6">
+											<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+											<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+											<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+											<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+											<property name="com.jaspersoft.studio.unit.height" value="px"/>
+											<property name="com.jaspersoft.studio.unit.width" value="px"/>
+											<property name="com.jaspersoft.studio.unit.y" value="px"/>
+										</reportElement>
+										<jr:table>
+											<datasetRun subDataset="documentsDataset" uuid="c50d4a17-50a6-4353-97c9-4235a6c33a33">
+												<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("docs")]]></dataSourceExpression>
+											</datasetRun>
+											<jr:column width="480" uuid="394e78ba-dc62-4910-9c24-a62401c76e67">
+												<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+												<jr:columnHeader style="Table_CH" height="12">
+													<property name="com.jaspersoft.studio.unit.height" value="px"/>
+													<property name="com.jaspersoft.studio.unit.width" value="px"/>
+													<frame>
+														<reportElement x="0" y="0" width="480" height="12" uuid="fe6aa4d0-e586-42af-8619-d47d31efe399">
+															<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+														</reportElement>
+														<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+															<reportElement x="0" y="0" width="40" height="12" uuid="18c8be7e-9b08-4b45-9596-c5a84ff76a2c">
+																<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+																<property name="com.jaspersoft.studio.unit.width" value="px"/>
+															</reportElement>
+															<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0">
+																<topPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<leftPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<bottomPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<rightPen lineWidth="0.5" lineColor="#9B9B9B"/>
+															</box>
+															<textElement textAlignment="Left" verticalAlignment="Middle">
+																<font fontName="DejaVu Sans Condensed" size="10" isBold="true"/>
+																<paragraph leftIndent="0" rightIndent="0" spacingBefore="0"/>
+															</textElement>
+															<textFieldExpression><![CDATA["№"]]></textFieldExpression>
+														</textField>
+														<textField isStretchWithOverflow="true" pattern="dd.MM.yyyy" isBlankWhenNull="true">
+															<reportElement x="40" y="0" width="70" height="12" uuid="036e7e3e-0d5e-45e2-b523-69d064775256">
+																<property name="com.jaspersoft.studio.unit.height" value="px"/>
+																<property name="com.jaspersoft.studio.unit.width" value="px"/>
+																<property name="com.jaspersoft.studio.unit.x" value="px"/>
+															</reportElement>
+															<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0">
+																<topPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<leftPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<bottomPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<rightPen lineWidth="0.5" lineColor="#9B9B9B"/>
+															</box>
+															<textElement textAlignment="Left" verticalAlignment="Middle">
+																<font fontName="DejaVu Sans Condensed" size="10" isBold="true"/>
+																<paragraph leftIndent="0" spacingBefore="0"/>
+															</textElement>
+															<textFieldExpression><![CDATA["Дата"]]></textFieldExpression>
+														</textField>
+														<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+															<reportElement x="110" y="0" width="150" height="12" uuid="aac9c29e-fdbd-4043-9072-0557a36a0441">
+																<property name="com.jaspersoft.studio.unit.height" value="px"/>
+																<property name="com.jaspersoft.studio.unit.x" value="px"/>
+																<property name="com.jaspersoft.studio.unit.width" value="px"/>
+															</reportElement>
+															<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0">
+																<topPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<leftPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<bottomPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<rightPen lineWidth="0.5" lineColor="#9B9B9B"/>
+															</box>
+															<textElement textAlignment="Left" verticalAlignment="Middle">
+																<font fontName="DejaVu Sans Condensed" size="10" isBold="true"/>
+																<paragraph lineSpacing="Single" lineSpacingSize="0.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+															</textElement>
+															<textFieldExpression><![CDATA["Счет получателя"]]></textFieldExpression>
+														</textField>
+														<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+															<reportElement x="260" y="0" width="110" height="12" uuid="41537d67-85cb-4a4e-9320-fae0f51377ef">
+																<property name="com.jaspersoft.studio.unit.height" value="px"/>
+																<property name="com.jaspersoft.studio.unit.x" value="px"/>
+																<property name="com.jaspersoft.studio.unit.width" value="px"/>
+															</reportElement>
+															<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0">
+																<pen lineWidth="0.5"/>
+																<topPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<leftPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<bottomPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<rightPen lineWidth="0.5" lineColor="#9B9B9B"/>
+															</box>
+															<textElement textAlignment="Left" verticalAlignment="Middle">
+																<font fontName="DejaVu Sans Condensed" size="10" isBold="true" isStrikeThrough="false"/>
+																<paragraph lineSpacingSize="10.0" leftIndent="0" rightIndent="0" spacingBefore="0"/>
+															</textElement>
+															<textFieldExpression><![CDATA["БИК получателя"]]></textFieldExpression>
+														</textField>
+														<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+															<reportElement x="370" y="0" width="110" height="12" uuid="8fff52f8-c854-4608-b394-e598bbd34337">
+																<property name="com.jaspersoft.studio.unit.height" value="px"/>
+																<property name="com.jaspersoft.studio.unit.x" value="px"/>
+															</reportElement>
+															<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0">
+																<pen lineWidth="0.5"/>
+																<topPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<leftPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<bottomPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<rightPen lineWidth="0.5" lineColor="#9B9B9B"/>
+															</box>
+															<textElement textAlignment="Left" verticalAlignment="Middle">
+																<font fontName="DejaVu Sans Condensed" size="10" isBold="true" isStrikeThrough="false"/>
+																<paragraph lineSpacingSize="10.0" leftIndent="0" rightIndent="0" spacingBefore="0"/>
+															</textElement>
+															<textFieldExpression><![CDATA["Сумма"]]></textFieldExpression>
+														</textField>
+													</frame>
+												</jr:columnHeader>
+												<jr:detailCell style="Table_TD" height="12">
+													<property name="com.jaspersoft.studio.unit.height" value="px"/>
+													<frame>
+														<reportElement x="0" y="0" width="480" height="12" uuid="44cfcc95-c8d8-440c-a1d8-b002e79d81cc">
+															<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+														</reportElement>
+														<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+															<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="40" height="12" uuid="7c828c84-f5af-41fd-8ea1-e1be5ed66f1b">
+																<property name="com.jaspersoft.studio.unit.height" value="px"/>
+															</reportElement>
+															<box topPadding="1" leftPadding="5" bottomPadding="0" rightPadding="0">
+																<topPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<leftPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<bottomPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<rightPen lineWidth="0.5" lineColor="#9B9B9B"/>
+															</box>
+															<textElement textAlignment="Left" verticalAlignment="Top">
+																<font fontName="DejaVu Sans Condensed" size="10"/>
+																<paragraph leftIndent="0" rightIndent="0" spacingBefore="0"/>
+															</textElement>
+															<textFieldExpression><![CDATA[$F{number}]]></textFieldExpression>
+														</textField>
+														<textField isStretchWithOverflow="true" pattern="dd.MM.yyyy" isBlankWhenNull="true">
+															<reportElement stretchType="ElementGroupHeight" x="40" y="0" width="70" height="12" uuid="3ae0f60c-1901-404e-962d-cb07d6e2b935">
+																<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+																<property name="com.jaspersoft.studio.unit.height" value="px"/>
+															</reportElement>
+															<box topPadding="1" leftPadding="5" bottomPadding="0" rightPadding="0">
+																<topPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<leftPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<bottomPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<rightPen lineWidth="0.5" lineColor="#9B9B9B"/>
+															</box>
+															<textElement textAlignment="Left" verticalAlignment="Top">
+																<font fontName="DejaVu Sans Condensed" size="10"/>
+																<paragraph leftIndent="0" spacingBefore="0"/>
+															</textElement>
+															<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+														</textField>
+														<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+															<reportElement stretchType="ElementGroupHeight" x="110" y="0" width="150" height="12" uuid="f08b1a0b-12ae-458e-b310-898413884f37">
+																<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+																<property name="com.jaspersoft.studio.unit.height" value="px"/>
+															</reportElement>
+															<box topPadding="1" leftPadding="5" bottomPadding="0" rightPadding="0">
+																<topPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<leftPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<bottomPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<rightPen lineWidth="0.5" lineColor="#9B9B9B"/>
+															</box>
+															<textElement textAlignment="Left" verticalAlignment="Top">
+																<font fontName="DejaVu Sans Condensed" size="10"/>
+																<paragraph lineSpacing="Single" lineSpacingSize="0.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+															</textElement>
+															<textFieldExpression><![CDATA[$F{acc}]]></textFieldExpression>
+														</textField>
+														<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+															<reportElement stretchType="ElementGroupHeight" x="260" y="0" width="110" height="12" uuid="f553c84d-45c1-49ed-adbe-ed2c3d6568a5">
+																<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+																<property name="com.jaspersoft.studio.unit.height" value="px"/>
+															</reportElement>
+															<box topPadding="1" leftPadding="5" bottomPadding="0" rightPadding="0">
+																<topPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<leftPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<bottomPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<rightPen lineWidth="0.5" lineColor="#9B9B9B"/>
+															</box>
+															<textElement textAlignment="Left" verticalAlignment="Top">
+																<font fontName="DejaVu Sans Condensed" size="10"/>
+																<paragraph lineSpacing="Single" lineSpacingSize="0.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+															</textElement>
+															<textFieldExpression><![CDATA[$F{bic}]]></textFieldExpression>
+														</textField>
+														<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+															<reportElement stretchType="ElementGroupHeight" x="370" y="0" width="110" height="12" uuid="ecea6467-2b31-4787-b8c7-e68c3984a2fb">
+																<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+																<property name="com.jaspersoft.studio.unit.height" value="px"/>
+															</reportElement>
+															<box topPadding="1" leftPadding="5" bottomPadding="0" rightPadding="0">
+																<pen lineWidth="0.5"/>
+																<topPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<leftPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<bottomPen lineWidth="0.5" lineColor="#9B9B9B"/>
+																<rightPen lineWidth="0.5" lineColor="#9B9B9B"/>
+															</box>
+															<textElement textAlignment="Left" verticalAlignment="Top">
+																<font fontName="DejaVu Sans Condensed" size="10" isStrikeThrough="false"/>
+																<paragraph lineSpacingSize="10.0" leftIndent="0" rightIndent="0" spacingBefore="0"/>
+															</textElement>
+															<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
+														</textField>
+													</frame>
+												</jr:detailCell>
+											</jr:column>
+										</jr:table>
+									</componentElement>
+									<frame>
+										<reportElement positionType="Float" x="0" y="21" width="480" height="1" uuid="569ba5c5-ef2f-4cca-b8bb-299f0d7f1bc9">
+											<property name="com.jaspersoft.studio.unit.y" value="px"/>
+											<property name="com.jaspersoft.studio.unit.width" value="px"/>
+											<printWhenExpression><![CDATA[$F{errorsCount} != null && $F{errorsCount}.intValue() > 0]]></printWhenExpression>
+										</reportElement>
+										<box>
+											<pen lineWidth="0.5"/>
+											<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+											<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+											<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+											<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+										</box>
+										<textField isStretchWithOverflow="true">
+											<reportElement positionType="Float" x="0" y="0" width="480" height="10" uuid="9f5d49c1-23ae-43a1-aab8-be22fb8f8893">
+												<property name="com.jaspersoft.studio.unit.height" value="px"/>
+												<property name="com.jaspersoft.studio.unit.width" value="px"/>
+											</reportElement>
+											<box leftPadding="5"/>
+											<textElement>
+												<font fontName="DejaVu Sans Condensed" size="10"/>
+											</textElement>
+											<textFieldExpression><![CDATA["Ошибки в документе: " + $F{errorsCount}]]></textFieldExpression>
+										</textField>
+										<componentElement>
+											<reportElement positionType="Float" x="20" y="11" width="460" height="10" uuid="b3568912-bd17-42c2-8f85-f3841e4c539c">
+												<property name="com.jaspersoft.studio.unit.y" value="px"/>
+											</reportElement>
+											<jr:list printOrder="Vertical">
+												<datasetRun subDataset="errorsDataset" uuid="723da0c2-2c0a-4638-9dbb-e5f7a002380d">
+													<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("errors")]]></dataSourceExpression>
+												</datasetRun>
+												<jr:listContents height="10" width="460">
+													<textField isStretchWithOverflow="true">
+														<reportElement x="0" y="0" width="410" height="10" uuid="4a9c07cb-4405-4d0f-9491-ea436cc97c83"/>
+														<textElement>
+															<font fontName="DejaVu Sans Condensed" size="10"/>
+														</textElement>
+														<textFieldExpression><![CDATA[$V{REPORT_COUNT} + ". " + $F{error}]]></textFieldExpression>
+													</textField>
+												</jr:listContents>
+											</jr:list>
+										</componentElement>
+									</frame>
+								</jr:listContents>
+							</jr:list>
+						</componentElement>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

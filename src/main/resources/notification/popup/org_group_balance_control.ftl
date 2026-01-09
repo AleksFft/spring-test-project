@@ -1,0 +1,1 @@
+Плановый остаток по группе компаний "${orgGroupName}" выходит за граничные значения:${"\r\n"}<#list balances as balance>${balance}<#sep>;${"\r\n"}</#sep></#list>

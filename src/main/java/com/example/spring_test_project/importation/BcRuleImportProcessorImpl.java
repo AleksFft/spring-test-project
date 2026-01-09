@@ -86,7 +86,7 @@ public class BcRuleImportProcessorImpl {
         time = (double) executionTimeNano / 1_000_000_000;
         log.info("recordRepository.flush {}", time);
 
-        return new BcRuleRecordResponse().setSessionId(sessionId);
+        return new BcRuleRecordResponse();
     }
 
 }

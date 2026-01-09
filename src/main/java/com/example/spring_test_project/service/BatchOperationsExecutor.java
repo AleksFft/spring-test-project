@@ -39,11 +39,11 @@ public class BatchOperationsExecutor {
             processor.accept(t);
         }
 
-        List<ImportDetails> collect = entities.stream()
-                .map(BcAnalytic::getImportDetails)
-                .flatMap(List::stream)
-                .toList();
-        return collect;
+//        List<ImportDetails> collect = entities.stream()
+//                .map(BcAnalytic::getImportDetails)
+//                .flatMap(List::stream)
+//                .toList();
+        return List.of();
     }
 
 }

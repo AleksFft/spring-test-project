@@ -1,0 +1,119 @@
+{
+//  "reportType": "SCHEDULED_PAYMENT_DOCUMENT_IMPORT",
+      "reportType": "SCHEDULED_PAYMENT_DOCUMENT_VALIDATE_AND_PARSE",
+  "totalFiles": 15,
+  "totalSuccessfullyUploaded": 10,
+  "totalNotImported": 1,
+  "totalUnformatted": 5,
+  "files": [
+    {
+      "filename": "Значение реквизита «ИНН/КИО контрагента» не прошло проверку ключа (для юридических лиц – 10 символ00",
+      "state": "SUCCESS",
+      "title": "Файл успешно загружен",
+      "date": "02.09.2025 13:37:44",
+      "totalDocs": 5,
+      "totalpaymentDocs": 3,
+      "groups": [
+        {
+          "status": "ERROR",
+          "title": "Не импортированные документы: 1",
+          "errorsCount": 2,
+          "docs": [
+            {
+              "number": "3333333333",
+              "date": "01.09.2025",
+              "acc": "UF281000000000000047028100000000888",
+              "bic": "UF2000000465465",
+              "sum": "28100000000000004",
+              "status": "ERROR"
+            },
+            {
+              "number": "34",
+              "date": "01.09.2025",
+              "acc": "40702810000000000000",
+              "bic": "042000000",
+              "sum": "100000.00",
+              "status": "ERROR"
+            }
+          ],
+          "errors": [
+            "Значение реквизита «ИНН/КИО контрагента» не прошло проверку ключа (для юридических лиц – 10 символ, для физических лиц и ИП – 11 и 12 символы). Необходимо изменить значение реквизита",
+            "Некорректное значение в реквизите «Счет плательщика»"
+          ]
+        },
+        {
+          "status": "SUCCESS",
+          "title": "Успешно импортированные документы: 2",
+          "docs": [
+            {
+              "number": "31",
+              "date": "01.09.2025",
+              "acc": "40702810000000000000",
+              "bic": "042000000",
+              "sum": "100000.00",
+              "status": "SUCCESS"
+            },
+            {
+              "number": "32",
+              "date": "01.09.2025",
+              "acc": "40702810000000000000",
+              "bic": "042000000",
+              "sum": "100000.00",
+              "status": "SUCCESS"
+            }
+          ]
+        },
+        {
+          "status": "SUCCESS",
+          "title": "Созданы встречные документы (перемещение между счетами): 1",
+          "docs": [
+            {
+              "number": "31",
+              "date": "01.09.2025",
+              "acc": "40702810000000000000",
+              "bic": "042000000",
+              "sum": "100000.00",
+              "status": "SUCCESS"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "2025_09_01_Платежи.xlx",
+      "date": "20.03.1331",
+      "state": "ERROR",
+      "title": "Ошибка импорта",
+      "totalDocs": 5,
+      "totalpaymentDocs": 3,
+      "groups": []
+    },
+    {
+      "filename": "2025_09_01_Платежи.xlx",
+      "date": "20.03.1331",
+      "state": "UNFORMATTED",
+      "title": "Неверный формат файла",
+      "totalDocs": 5,
+      "totalpaymentDocs": 3,
+      "groups": []
+    },
+    {
+      "filename": "2025_09_01_Платежи.xlx",
+      "date": "20.03.1331",
+      "state": "UNFORMATTED",
+      "title": "Неверный формат файла",
+      "totalDocs": 5,
+      "totalpaymentDocs": 3,
+      "groups": []
+    },
+    {
+      "filename": "2025_09_01_Платежи.xlx",
+      "date": "20.03.1331",
+      "state": "UNFORMATTED",
+      "title": "Неверный формат файла",
+      "totalDocs": 5,
+      "totalpaymentDocs": 3,
+      "groups": []
+    }
+  ]
+}
